@@ -17,8 +17,8 @@ Wejdź na stronę [https://www.python.org/downloads/release/python-371/](https:/
 
 Uruchom pobrany instalator. Zaznacz opcję `Add Python 3.7 to PATH`, a następnie kliknij `Install Now`.
 #### macOS
-Wejdź na stronę [https://www.python.org/downloads/release/python-371/](https://www.python.org/downloads/release/python-371/) i pobierz odpowiedni instalator z sekcji `Files` - `Mac OS X 64-bit/32-bit installer` Dla OS X w wersji poniżej OS X 10.9 albo `Mac OS X 64-bit installer` dla nowszych niż OS X 10.9 wersji systemy. Uruchom pobrany plik i dokończ instalację.
-Jeżeli jednak kożystasz z Homebrew (brew), w konsoli wpisz komendę: `brew install python3`.
+Wejdź na stronę [https://www.python.org/downloads/release/python-371/](https://www.python.org/downloads/release/python-371/) i pobierz odpowiedni instalator z sekcji `Files` - `Mac OS X 64-bit/32-bit installer` Dla OS X w wersji poniżej OS X 10.9 albo `Mac OS X 64-bit installer` dla nowszych niż OS X 10.9 wersji systemy. Uruchom pobrany plik i dokończ instalację.
+Jeżeli jednak korzystasz z Homebrew (brew), w konsoli wpisz komendę: `brew install python3`.
 #### Linux
 Istnieje duża szansa, że jeszcze nie masz zainstalowanego odpowiedniego pythona na swoim komputerze. W celu sprawdzenia jaka wersja jest zainstalowana, wpisz w terminalu:
 ```bazaar
