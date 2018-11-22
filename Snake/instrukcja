@@ -1,0 +1,125 @@
+1. stworzenie virtualenv:
+	`python3.7 -m venv ~/.virtualenvs/gry`
+	
+2. wejście do virtualenv:
+	`source ~/.virtualenvs/gry/bin/activate` - jakoś tak
+	`workon gry` - a to jak ktoś ma skrypt
+	
+3. instalacja `pygame`:
+	`pip install pygame`
+	
+4. sprawdzenie, czy działa:
+	włączenie interpretera i wpisanie `import pygame` jak nie rzuci wyjątkiem to
+	pewnie działa :).
+	
+5. Pierwszy program - wyświetlenie okna czarnego?
+	Kod z książki: https://inventwithpython.com/makinggames.pdf
+	
+	Uwagi: wyjaśnić pojęcia:
+		importy - może Kuba da rade wcześniej
+		display surface - powierzchnia na której możemy coś wyświetlić
+		pętla programu
+		zdarzenia
+		pixele jak idą osie i że inaczej niż w układzie współrzędnych ze szkoły
+		
+# TODO:	DLACZEGO do ... nie działają wywołania w stylu:
+#	pygame.draw.circle(DISPLAYSURF, RED, (200, 150), 50, width=20)
+#	tylko trzeba pisać:
+#	pygame.draw.circle(DISPLAYSURF, RED, (200, 150), 50, 20)
+#
+#	błąd jakim wali: TypeError: circle() takes no keyword arguments
+
+6. Wyświetlenie białego kwadratu i czerwonego kółka
+	`02_kolko_i_kwadrat.py`
+	kwadrat - segment węża
+	kółko - to na co wąż poluje
+	
+7. Załatwienie problemu 100% zajętości processora - licznik FPS
+	`03_kolko_i_kwadrat.py`
+	Ale bieda - nie pomogło :(
+	https://github.com/pygame/pygame/issues/331
+	Jednak pomaga, ale trzeba dodać: pygame.mixer.quit()
+	`04_kolko_i_kwadrat.py`
+
+
+8. Wyświetlenie białego kwadratu kilka razy obok siebie, bez Ctrl-C i Ctrl-V
+	`05_segment_and_food.py`
+	Vivat funkcje!
+	
+9. Wyswietlenie animacji węża
+	`06_moving_segment.py` - podstawowa z kierunkiem w prawo
+	`07_moving_segment_snake_class.py` - wszystkie kierunki, dodana klasa
+		reprezentująca stan węża i operacje na nim
+
+10. Kontrolowanie ruchów węża - przyciski strzałek
+	`08_interactive_moves.py` - dzialaja przyciski strzałek, ale są pewne problemy:
+		- wąż może zawrócić w miejscu, a przy zygzaku jeszcze dziwniej
+		- wąż może wyjść poza planszę do gry
+	`09_interactive_moves_prawie_fixed.py` - tu jest babol, trzeba trzymać gdzieś ostatni kierunek wykonany, a nie sprawdzać z tym, który jest aktualnie, bo wciskając dwa razy szybko przyciski da sie zawrócić w miejscu.
+		- (prawie) nie można zawrócić w miejscu
+		- przechodzenie przez krawędzie
+	`10_interactive_moves_fixed.py` - do napisania
+		- nie można zawrócić w miejscu
+
+11. Zjadanie pożywienia - wydłużanie węża
+	`11_eating.py` - musi być nadbudoawana nad `10_interactive_moves_fixed`
+		- dodana klasa odpowiadająca za pożywienie
+		- dodana obsługa zjadania pożywienia, ale bez rośnięcia węża
+	`12_eating_and_growing.py` musi być nadbudoawana nad `10_interactive_moves_fixed`
+		- mała zmiana a wąż rośnie :):):) (jest lepiej niż kiedy miałem 16 lat)
+		- jedzenie może się wylosowac na wężu
+
+
+###############################################################################
+Tu się kończy materiał z 2017 roku z wykładów.
+Zajął ok 1h na wykładzie na średniej prędkości.
+Ogólne pomysły na to jak rozbudować węża:
+	- spakowanie tego do paczki pythonowej i wysłanie na pypi testowy(tymczasowy)
+	- warunki końca gry:
+		- najechanie na krawędź
+		- najechanie na węża
+	- rozpięcie powiązania 1 do 1 FPS i prędkości węża
+	- plik konfiguracyjny 
+		- rozmiar mapy,
+		- początkowy stan,
+		- gdzie się kropki będą pojawiać,
+		- FPS,
+		- %prędkości węża w FPS
+		- liczba graczy
+		- klawisze dla każdego gracza
+	- multiplayer
+		- hot seats
+		- coś po sieci (może na level up? Teraz to chyba zbyt ciężki temat)
+			- logowanie login jako md5/sha1 z maila
+	- wczytanie obrazków na fragmenty węża i pożywienia:
+		- jedzenie
+		- głowa
+		- końcówka ogona
+		- segmenty parzyste
+		- segmenty nieparzyste
+	- licznik punktów
+	- po śmierci zaczęcie od razu od nowa
+
+
+
+
+
+
+
+12. Warunki końca gry
+	- najechanie na krawędź
+	- najechanie na węża
+
+Bonus:
+	1. policzenie ile nam zajmuje "jedna" klatka w % czasu na nia dozwolonego
+	2. ładniejsze segmenty - strzałki
+	3. inny segment na początku i na końcu węża
+	4. licznik punktów
+	5. menu na początek
+	6. obrazki w miejsce segmentów
+	7. spakowanie tego do jakiejś binraki, żeby gdzieś wrzucić plik wykonywalny
+		i chwalić się nim gdzie popadnie.
+	8. Dodać jakieś dźwięki - ale uwaga na babol za 100% zużycia CPU
+	9. autoskalowanie do fullscreen
+		https://stackoverflow.com/questions/19954469/how-to-get-the-resolution-of-a-monitor-in-pygame
+
