@@ -36,4 +36,58 @@ Przykład:
 
 '''
 
-# your code goes below
+import math
+
+
+class MyFraction:
+    def __init__(self, numerator, denominator=1):
+        if isinstance(numerator, MyFraction):
+            self.numerator = numerator.numerator
+            self.denominator = numerator.denominator
+        else:
+            self.numerator = numerator
+            self.denominator = denominator
+        self._reduce()
+
+    def _reduce(self):
+        nd_gcd = math.gcd(
+            self.numerator, self.denominator
+        )
+        self.numerator //= nd_gcd
+        self.denominator //= nd_gcd
+
+    def _inner_add(self, other):
+        other = MyFraction(other)
+        # a/b + c/d = (a*d + c*b)/(b*d) = g/h
+        a = self.numerator
+        b = self.denominator
+        c = other.numerator
+        d = other.denominator
+        g = a * d + c * b
+        h = b * d
+        return g, h
+
+    def __add__(self, other):
+        g, h = self._inner_add(other)
+        return MyFraction(g, h)
+
+    def __eq__(self, other):
+        return (
+            self.numerator == other.numerator
+            and self.denominator == other.denominator
+        )
+
+    def __iadd__(self, other):
+        self.numerator, self.denominator = self._inner_add(other)
+        self._reduce()
+        return self
+
+    def __radd__(self, other):
+        return self + other
+
+    def __repr__(self):
+        return '{}(numerator={}, denominator={})'.format(
+            self.__class__.__name__,
+            self.numerator,
+            self.denominator
+        )
