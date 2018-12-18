@@ -7,8 +7,6 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
 pygame.init()
-FPS = 60  # Frames Per Second
-fpsClock = pygame.time.Clock()
 DISPLAYSURF = pygame.display.set_mode((400, 300))
 pygame.display.set_caption('Circle and the square!')
 
@@ -22,4 +20,3 @@ while True:
             pygame.quit()
             sys.exit()
     pygame.display.update()
-    # fpsClock.tick(FPS)

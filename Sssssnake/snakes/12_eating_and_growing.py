@@ -54,6 +54,7 @@ class Snake:
     def __init__(self, food):
         self.segments = [[0, 5], [1, 5], [2, 5], [3, 5], [4, 5], [5, 5]]
         self.direction = 'RIGHT'
+        self.last_direction = self.direction
         self.food = food
 
     def _normalize_segments(self):
@@ -69,15 +70,16 @@ class Snake:
 
     def move(self):
         vector = self.vectors.get(self.direction, (0, 0))
+        self.last_direction = self.direction
         # wypadałoby zalogować, że brakuje jakiegos klucza...
-        self.segments.pop(0)
         first_segment = self.segments[-1]
         self.segments.append(
             # TODO: a może da się sprytniej? Coś z zip?
             [first_segment[0] + vector[0], first_segment[1] + vector[1]]
         )
         self._normalize_segments()
-        self.try_to_eat()
+        if not self.try_to_eat():
+            self.segments.pop(0)
 
     def draw(self, surface):
         for segment in self.segments:
@@ -87,16 +89,16 @@ class Snake:
         # te stałe stringi wypadałoby do jakiś constów przenieść
         if event.type == KEYDOWN:
             if event.key == K_LEFT:
-                if not self.direction == 'RIGHT':
+                if not self.last_direction == 'RIGHT':
                     self.direction = 'LEFT'
             elif event.key == K_RIGHT:
-                if not self.direction == 'LEFT':
+                if not self.last_direction == 'LEFT':
                     self.direction = 'RIGHT'
             elif event.key == K_UP:
-                if not self.direction == 'DOWN':
+                if not self.last_direction == 'DOWN':
                     self.direction = 'UP'
             elif event.key == K_DOWN:
-                if not self.direction == 'UP':
+                if not self.last_direction == 'UP':
                     self.direction = 'DOWN'
 
     def try_to_eat(self):
@@ -105,10 +107,13 @@ class Snake:
             and self.segments[-1][1] == self.food.y
         ):
             self.food.eaten()
+            return True
+        return False
 
 
 class FoodProvider:
     def __init__(self):
+        # A tu jest subtelny bug - możemy postawić jedzenie na wężu!!!!!
         self._get_new_coords()
 
     def _get_new_coords(self):
